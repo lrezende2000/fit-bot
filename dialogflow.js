@@ -29,12 +29,12 @@ async function sendMessage(chatId, message) {
 		responses = [
 			{
 				queryResult: {
-					fulfillmentText: '',
+					fulfillmentText: 'oi',
 					intent: {
-						displayName: ''
+						displayName: 'alguem'
 					},
 					parameters: {
-						fields: ''
+						fields: 'null'
 					}
 				}
 			}
