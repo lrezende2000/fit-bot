@@ -10,7 +10,7 @@ const token = process.env.TELEGRAM_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
-bot.on('message', async (msg) => {
+bot.on('message', async function(msg) {
 	const chatId = msg.chat.id;
 	let dfResponse = null;
 
