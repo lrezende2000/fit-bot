@@ -1,4 +1,8 @@
 /* eslint-disable no-undef */
+const Promise = require('bluebird');
+Promise.config({
+	cancellation: true
+});
 require('dotenv').config();
 const YouTube = require('youtube-node');
 // const config = require('./configs/youtube');
