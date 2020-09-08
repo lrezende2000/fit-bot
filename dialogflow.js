@@ -28,12 +28,14 @@ async function sendMessage(chatId, message) {
 	} catch (err) {
 		responses = [
 			{
-				fulfillmentText: '',
-				intent: {
-					displayName: ''
-				},
-				parameters: {
-					fields: ''
+				queryResult: {
+					fulfillmentText: '',
+					intent: {
+						displayName: ''
+					},
+					parameters: {
+						fields: ''
+					}
 				}
 			}
 		];
