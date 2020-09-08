@@ -11,12 +11,21 @@ const bot = new TelegramBot(token, { polling: true });
 
 bot.on('message', async (msg) => {
 	const chatId = msg.chat.id;
+	let dfResponse = null;
 
-	const dfResponse = await dialogflow.sendMessage(chatId.toString(), msg.text);
+	try {
+		dfResponse = await dialogflow.sendMessage(chatId.toString(), msg.text);
+	} catch (err) {
+		dfResponse = { text: `Deu merda vei - ${err}` };
+	}
 
 	let textResponse = dfResponse.text;
 	if (dfResponse.intent === 'Treino Específico') {
-		textResponse = await youtube.searchVideoURL(textResponse, msg.text);
+		try {
+			textResponse = await youtube.searchVideoURL(textResponse, msg.text);
+		} catch (err) {
+			textResponse = 'Deu merda' + err;
+		}
 	}
     
 	bot.sendMessage(chatId, textResponse);

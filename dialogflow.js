@@ -22,7 +22,12 @@ async function sendMessage(chatId, message) {
 
 	request.queryInput = message === '/start' ?  eventQueryInput : textQueryInput;
 
-	const responses = await sessionClient.detectIntent(request);
+	let responses;
+	try {
+		responses = await sessionClient.detectIntent(request);
+	} catch (err) {
+		responses = null;
+	}
 
 	const result = responses[0].queryResult;
 
