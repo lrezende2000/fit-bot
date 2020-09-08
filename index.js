@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
+process.env.NTBA_FIX_319 = 1;
 const TelegramBot = require('node-telegram-bot-api');
 const dialogflow = require('./dialogflow');
 const youtube = require('./youtube');
