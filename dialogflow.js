@@ -26,15 +26,17 @@ async function sendMessage(chatId, message) {
 	try {
 		responses = await sessionClient.detectIntent(request);
 	} catch (err) {
-		responses = {
-			fulfillmentText: '',
-			intent: {
-				displayName: ''
-			},
-			parameters: {
-				fields: ''
+		responses = [
+			{
+				fulfillmentText: '',
+				intent: {
+					displayName: ''
+				},
+				parameters: {
+					fields: ''
+				}
 			}
-		};
+		];
 	}
 
 	const result = responses[0].queryResult;
