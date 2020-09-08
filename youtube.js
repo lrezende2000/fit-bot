@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
 const YouTube = require('youtube-node');
-const config = require('./configs/youtube');
+// const config = require('./configs/youtube');
 
 const youtube = new YouTube();
 
-youtube.setKey(config.key);
+youtube.setKey(process.env.YOUTUBE_KEY);
 
 function searchVideoURL(message, queryText) {
 	return new Promise((resolve) => {

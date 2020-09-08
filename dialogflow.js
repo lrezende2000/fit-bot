@@ -1,13 +1,15 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
 const dialogflow = require('dialogflow');
-const configs = require('./configs/FitBotDialogFlow');
+// const configs = require('./configs/FitBotDialogFlow');
 
 const sessionClient = new dialogflow.SessionsClient({
-	projectId: configs.project_id,
-	credentials: { private_key: configs.private_key, client_email: configs.client_email }
+	projectId: process.env.DIALOGFLOW_PROJECT_ID,
+	credentials: { private_key: process.env.DIALOGFLOW_PRIVATE_KEY, client_email: process.env.DIALOGFLOW_CLIENT_EMAIL }
 });
 
 async function sendMessage(chatId, message) {
-	const sessionPath = sessionClient.sessionPath(configs.project_id, chatId);
+	const sessionPath = sessionClient.sessionPath(process.env.DIALOGFLOW_PROJECT_ID, chatId);
 
 	const request = {
 		session: sessionPath,

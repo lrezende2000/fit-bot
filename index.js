@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const dialogflow = require('./dialogflow');
 const youtube = require('./youtube');
-const configs = require('./configs/FitBotTelegram');
+// const configs = require('./configs/FitBotTelegram');
 
-const token = configs.token;
+const token = process.env.TELEGRAM_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
