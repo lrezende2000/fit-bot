@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
+process.env['NTBA_FIX_319'] = 1;
 const TelegramBot = require('node-telegram-bot-api');
 const dialogflow = require('./dialogflow');
 const youtube = require('./youtube');
@@ -16,8 +17,23 @@ bot.on('message', async (msg) => {
 
 	let textResponse = dfResponse.text;
 	if (dfResponse.intent === 'Treino Específico') {
-		textResponse = await youtube.searchVideoURL(textResponse, msg.text);
+		const muscle = dfResponse.fields.Muscles.stringValue;
+		const [message, youtubeLinks] = await youtube.searchVideoURL(textResponse, muscle);
+		if (youtubeLinks.length !== 0) {
+			youtubeLinks.map((yL) => {
+				textResponse = `${message} ${yL}`;
+				bot.sendMessage(chatId, textResponse);
+			});
+		} else {
+			textResponse = message;
+			bot.sendMessage(chatId, textResponse);
+		}
 	}
-    
-	bot.sendMessage(chatId, textResponse);
+
+	if (dfResponse.intent !== 'Treino Específico') {
+		if(msg.chat.type === 'group' && dfResponse.intent === 'Default Fallback Intent') {
+			return;
+		}
+		bot.sendMessage(chatId, textResponse);
+	}
 });
