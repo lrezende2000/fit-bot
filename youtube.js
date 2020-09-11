@@ -7,13 +7,16 @@ const youtube = new YouTube();
 
 youtube.setKey(process.env.YOUTUBE_KEY);
 
-function searchVideoURL(message, queryText) {
+function searchVideoURL(message, queryText, intent) {
 	return new Promise((resolve) => {
-		youtube.search(`Exercícios de ${queryText} em casa`, 3, function(error, result) {
+    
+		const youtubeSearch = intent === 'Treinos' ? `Exercícios de ${queryText} em casa` : queryText;
+    
+		youtube.search(youtubeSearch, 3, function(error, result) {
 			if (error) {
 				resolve(['Alguma coisa não deu certo', []]);
-			} else { 
-				const videoIds = result.items.map((item) => item.id.videoId).filter(item => item);
+			} else {
+				const videoIds = result.items.map((item) => item.id.videoId);
 				const youtubeLinks = videoIds.map((videoId) => `https://www.youtube.com/watch?v=${videoId}`);
 
 				resolve([message, youtubeLinks]);

@@ -16,9 +16,11 @@ bot.on('message', async (msg) => {
 	const dfResponse = await dialogflow.sendMessage(chatId.toString(), msg.text);
 
 	let textResponse = dfResponse.text;
-	if (dfResponse.intent === 'Treino Específico') {
-		const muscle = dfResponse.fields.Muscles.stringValue;
-		const [message, youtubeLinks] = await youtube.searchVideoURL(textResponse, muscle);
+	if (dfResponse.intent === 'Treinos' || dfResponse.intent === 'Treino Específico') {
+		const searchOnYoutube = dfResponse.intent === 'Treinos'
+			? dfResponse.fields.Muscles.stringValue
+			: dfResponse.fields.Exercises.stringValue.split(':')[1];
+		const [message, youtubeLinks] = await youtube.searchVideoURL(textResponse, searchOnYoutube, dfResponse.intent);
 		if (youtubeLinks.length !== 0) {
 			youtubeLinks.map((yL) => {
 				textResponse = `${message} ${yL}`;
@@ -30,7 +32,7 @@ bot.on('message', async (msg) => {
 		}
 	}
 
-	if (dfResponse.intent !== 'Treino Específico') {
+	if (dfResponse.intent !== 'Treinos' && dfResponse.intent !== 'Treino Específico') {
 		if(msg.chat.type === 'group' && dfResponse.intent === 'Default Fallback Intent') {
 			return;
 		}
