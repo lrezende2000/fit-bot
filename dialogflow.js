@@ -18,9 +18,9 @@ async function sendMessage(chatId, message) {
 
 	const textQueryInput = { text: { text: message, languageCode: 'pt-BR' } };
 
-	const eventQueryInput = { event: { name: 'start', languageCode: 'pt-BR' } };
+	// const eventQueryInput = { event: { name: 'start', languageCode: 'pt-BR' } };
 
-	request.queryInput = message === '/start' ?  eventQueryInput : textQueryInput;
+	request.queryInput = textQueryInput; // message === '/start' ?  eventQueryInput :
 
 	const responses = await sessionClient.detectIntent(request);
 

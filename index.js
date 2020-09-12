@@ -22,9 +22,10 @@ bot.on('message', async (msg) => {
 			: dfResponse.fields.Exercises.stringValue.split(':')[1];
 		const [message, youtubeLinks] = await youtube.searchVideoURL(textResponse, searchOnYoutube, dfResponse.intent);
 		if (youtubeLinks.length !== 0) {
+			textResponse = `Estou te enviando alguns vídeos de ${message.split(':')[1]}`;
+			bot.sendMessage(chatId, textResponse);
 			youtubeLinks.map((yL) => {
-				textResponse = `${message} ${yL}`;
-				bot.sendMessage(chatId, textResponse);
+				bot.sendMessage(chatId, yL);
 			});
 		} else {
 			textResponse = message;
